@@ -23,8 +23,9 @@ public class Main {
 	private static void gameLoop(){
 		// Kreiranje kamere
 		Camera camera = new Camera(70, (float)Display.getWidth()/(float)Display.getHeight(), 0.3f, 1000f);
-		 float posX = 0, posZ = -10f, rotX = 0, rotY = 0, rotZ = 0;
+		 float posX = 0, posY = -5f, posZ = -10f, rotX = 0, rotY = 0, rotZ = 0;
 		 float movZ = 0;
+		 float movY = 0;
 		 int delay = 0;
 		// Game loop
 		while (!Display.isCloseRequested()){
@@ -36,26 +37,30 @@ public class Main {
 			
 			//Branje ukazov igralca
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-				rotY += 0.01f;
+				if (rotY < 30) {
+					rotY += 0.05f;
+				}
 			}
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-				rotY -= 0.01f;
+				if (rotY > -30) {
+					rotY -= 0.05f;
+				}
 			}
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
-				posZ -= 0.01f;
-				if (delay == 500){
-					camera.moveZ(0.01f);
+				posZ -= 0.1f;
+				if (delay == 50){
+					camera.moveZ(0.1f);
 				} else {
 					delay++;
 				}
 			}
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-				posZ += 0.01f;
-				if (delay == -200){
-					camera.moveZ(-0.01f);
+				posZ += 0.1f;
+				if (delay == -20){
+					camera.moveZ(-0.1f);
 				} else {
 					delay--;
 				}
@@ -63,20 +68,30 @@ public class Main {
 			
 			if (movZ == posZ && delay != 0){
 				if (delay < 0){
-					camera.moveZ(-0.01f);
+					camera.moveZ(-0.1f);
 					delay++;
 				} else {
-					camera.moveZ(0.01f);
+					camera.moveZ(0.1f);
 					delay--;
 				}
 			}
 			
+			if (rotY == movY && rotY != 0){
+				if (rotY > 0){
+					rotY -= 0.05f;
+				} else {
+					rotY += 0.05f;
+				}
+			}
+			
 			movZ = posZ;
+			movY = rotY;
 			
 			glPushMatrix();
 			{
+				
 				glColor3f(1.0f,0.5f,0f);
-				glTranslatef(posX,0,posZ);
+				glTranslatef(posX,-4f,posZ);
 				glRotatef(rotX,1,0,0);
 				glRotatef(rotY,0,1,0);
 				glRotatef(rotZ,0,0,1);
@@ -124,6 +139,64 @@ public class Main {
 					glVertex3f(1,1,-1);
 					glVertex3f(1,1,1);
 					glVertex3f(-1,1,1);
+				}
+				glEnd();
+			}
+			glPopMatrix();
+			
+			glPushMatrix();
+			{
+				glColor3f(1.0f,0.5f,0f);
+				glTranslatef(posX,posY,-10);
+	
+				glBegin(GL_QUADS);
+				{
+					//"Road"
+					glColor3f(1f,1f,1f);
+					glVertex3f(-2,0,-500);
+					glVertex3f(2,0,-500);
+					glVertex3f(2,0,0);
+					glVertex3f(-2,0,0);
+		
+				}
+				glEnd();
+			}
+			glPopMatrix();
+			
+			glPushMatrix();
+			{
+				glColor3f(1.0f,0.5f,0f);
+				glTranslatef(posX,posY+0.01f,-10);
+	
+				glBegin(GL_QUADS);
+				{
+					// Lines
+					glColor3f(0f,0f,0f);
+					glVertex3f(-0.5f,0,-90);
+					glVertex3f(0.5f,0,-90);
+					glVertex3f(0.5f,0,0);
+					glVertex3f(-0.5f,0,0);
+					
+					glVertex3f(-0.5f,0,-190);
+					glVertex3f(0.5f,0,-190);
+					glVertex3f(0.5f,0,-100);
+					glVertex3f(-0.5f,0,-100);
+					
+					glVertex3f(-0.5f,0,-290);
+					glVertex3f(0.5f,0,-290);
+					glVertex3f(0.5f,0,-200);
+					glVertex3f(-0.5f,0,-200);
+					
+					glVertex3f(-0.5f,0,-390);
+					glVertex3f(0.5f,0,-390);
+					glVertex3f(0.5f,0,-300);
+					glVertex3f(-0.5f,0,-300);
+					
+					glVertex3f(-0.5f,0,-490);
+					glVertex3f(0.5f,0,-490);
+					glVertex3f(0.5f,0,-400);
+					glVertex3f(-0.5f,0,-400);
+		
 				}
 				glEnd();
 			}
