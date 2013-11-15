@@ -51,6 +51,10 @@ public class Camera {
 		z += speed;
 	}
 	
+	public void moveX(float speed){
+		x += speed;
+	}
+	
 	// Rotiranje kamere
 	public void rotateY(float alpha){
 		rY += alpha;

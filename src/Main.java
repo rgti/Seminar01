@@ -36,20 +36,10 @@ public class Main {
 			camera.useView();
 			
 			//Branje ukazov igralca
-			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-				if (rotY < 30) {
-					rotY += 0.05f;
-				}
-			}
-			
-			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-				if (rotY > -30) {
-					rotY -= 0.05f;
-				}
-			}
-			
 			if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
+				// Nastavljanje z komponente za objekt
 				posZ -= 0.1f;
+				// Nastavljanje z komponente za kamero z delayom
 				if (delay == 50){
 					camera.moveZ(0.1f);
 				} else {
@@ -58,7 +48,9 @@ public class Main {
 			}
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
+				// Nastavljanje z komponente za objekt
 				posZ += 0.1f;
+				// Nastavljanje z komponente za kamero z delayom
 				if (delay == -20){
 					camera.moveZ(-0.1f);
 				} else {
@@ -66,6 +58,67 @@ public class Main {
 				}
 			}
 			
+			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+				// Preverjanje ali se objekt premika
+				if (posZ != movZ){
+					// Nastavljanje rotacije objekta
+					if (rotY < 30) {
+						rotY += 0.05f;
+					}
+					// Nastavljanje x komponente in premikanje kamere
+					if (rotY < 5){
+						posX -= 0.001f;
+						camera.moveX(0.001f);
+					} else if (rotY < 10){
+						posX -= 0.005f;
+						camera.moveX(0.005f);
+					} else if (rotY < 15){
+						posX -= 0.01f;
+						camera.moveX(0.01f);
+					} else if (rotY < 20){
+						posX -= 0.015f;
+						camera.moveX(0.015f);
+					} else if (rotY < 25){
+						posX -= 0.02f;
+						camera.moveX(0.02f);
+					} else {
+						posX -= 0.025f;
+						camera.moveX(0.025f);
+					}
+				}
+			}
+			
+			if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+				// Preverjanje ali se objekt premika
+				if (posZ != movZ){
+					// Nastavljanje rotacije objekta
+					if (rotY > -30) {
+						rotY -= 0.05f;
+					}
+					// Nastavljanje x komponente in premikanje kamere
+					if (rotY > -5){
+						posX += 0.001f;
+						camera.moveX(-0.001f);
+					} else if (rotY > -10){
+						posX += 0.005f;
+						camera.moveX(-0.005f);
+					} else if (rotY > -15){
+						posX += 0.01f;
+						camera.moveX(-0.01f);
+					} else if (rotY > -20){
+						posX += 0.015f;
+						camera.moveX(-0.015f);
+					} else if (rotY > -25){
+						posX += 0.02f;
+						camera.moveX(-0.02f);
+					} else {
+						posX += 0.025f;
+						camera.moveX(-0.025f);
+					}
+				}
+			}
+			
+			// Ob vstavitvi predmeta (movZ == posZ), iznièevanje delaya
 			if (movZ == posZ && delay != 0){
 				if (delay < 0){
 					camera.moveZ(-0.1f);
@@ -76,6 +129,7 @@ public class Main {
 				}
 			}
 			
+			// Ob vstavitvi rotacije predmeta (rotY == movY), rotiranje nazaj
 			if (rotY == movY && rotY != 0){
 				if (rotY > 0){
 					rotY -= 0.05f;
@@ -87,6 +141,8 @@ public class Main {
 			movZ = posZ;
 			movY = rotY;
 			
+			
+			// Testno izrisovanje predmeta in ceste
 			glPushMatrix();
 			{
 				
@@ -147,7 +203,7 @@ public class Main {
 			glPushMatrix();
 			{
 				glColor3f(1.0f,0.5f,0f);
-				glTranslatef(posX,posY,-10);
+				glTranslatef(0,posY,-10);
 	
 				glBegin(GL_QUADS);
 				{
@@ -166,7 +222,7 @@ public class Main {
 			glPushMatrix();
 			{
 				glColor3f(1.0f,0.5f,0f);
-				glTranslatef(posX,posY+0.01f,-10);
+				glTranslatef(0,posY+0.01f,-10);
 	
 				glBegin(GL_QUADS);
 				{
