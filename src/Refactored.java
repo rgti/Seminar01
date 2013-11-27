@@ -48,7 +48,6 @@ public class Refactored extends BasicWindow{
 		super.processInput();
 	}
 	  
-	  
 	public static void main(String[] args) {
 	    (new Refactored()).execute();
 	}  

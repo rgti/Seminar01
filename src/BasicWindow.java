@@ -84,6 +84,7 @@ public class BasicWindow {
 //	    No FSAA
 //	    Display.create();
 	    Display.setTitle(this.getClass().getName());
+
 	}
 
 	public static ByteBuffer allocBytes(int howmany) {
